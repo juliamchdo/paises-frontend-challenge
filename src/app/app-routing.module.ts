@@ -10,7 +10,7 @@ const routes: Routes = [
     path: '', component: LayoutComponent,
     children:[
       {path: '', component: HomeComponent},
-      {}
+      {path: 'paises', loadChildren: () => import('./pages/paises/paises.module').then(m => m.PaisesModule)}
     ]
   }
 ];
