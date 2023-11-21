@@ -30,7 +30,6 @@ export class LoginComponent implements OnInit {
   }
   public submitForm(){
     const {username, password} = this.formLogin.value;
-    console.log(username, password)
     this.formLogin.reset;
 
     this.loginService.login(username, password).subscribe(

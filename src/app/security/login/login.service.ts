@@ -11,7 +11,6 @@ export class LoginService {
   constructor(private httpClient: HttpClient) {}
 
   public login(username: string, password: string): Observable<any> {
-    console.log(username, password)
     const url = `${environment.host}/usuario/autenticar?login=${username}&senha=${password}`;
   
     return this.httpClient
@@ -25,12 +24,11 @@ export class LoginService {
       );
   }
 
-//   public getToken(): string | null {
-//     return localStorage.getItem(environment);
-//   }
+  public getToken(): string | null {
+    return localStorage.getItem("token");
+  }
 
   private setTokenLocalStorage(response: any): void {
-    console.log(response)
     const { type, token } = response;
     localStorage.setItem("token", response.token);
     localStorage.setItem("login", response.login);

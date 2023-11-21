@@ -4,18 +4,22 @@ import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { Pais } from "../shared/pais.model";
+import { LoginService } from "src/app/security/login/login.service";
 
 @Injectable({
     providedIn: 'root'
 })
 
 export class PaisService{
-    constructor(private http:HttpClient){
+    constructor(private http:HttpClient, private loginService:LoginService){
 
     }
 
     public listAll():Observable<Pais[]>{
-        const url = `${environment.host}/pais/listar`
+
+        const token = this.loginService.getToken();
+    
+        const url = `${environment.host}/pais/listar?token=${token}`
 
         return this.http.get(url).pipe(
             map(this.mapToPaises)
