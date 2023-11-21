@@ -13,4 +13,9 @@ export class LayoutComponent implements OnInit {
     
   }
 
+  public getUsername():string{
+    const nome = localStorage.getItem('nome');
+    return nome || "";
+  }
+
 }

@@ -7,7 +7,13 @@
         <th>Sigla</th>
         <th>Gentílico</th>
         <th>
-          <button class="btn btn-sm btn-success">+</button>
+          <button
+            class="btn btn-sm btn-success"
+            data-bs-toggle="modal"
+            data-bs-target="#addNewPais"
+          >
+            +
+          </button>
         </th>
       </tr>
     </thead>
@@ -17,7 +23,7 @@
         <td>{{ pais.sigla }}</td>
         <td>{{ pais.gentilico }}</td>
         <td>
-          <a routerLink="pais/salvar/{{pais}}" class="btn btn-sm btn-warning">
+          <a routerLink="pais/salvar/{{ pais }}" class="btn btn-sm btn-warning">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -38,7 +44,11 @@
 
           &nbsp;
 
-          <button (click)="removerPais(pais.id)" type="button" class="btn btn-sm btn-danger">
+          <button
+            (click)="removerPais(pais.id)"
+            type="button"
+            class="btn btn-sm btn-danger"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -59,4 +69,18 @@
       </tr>
     </tbody>
   </table>
+</div>
+
+<div class="modal fade" id="addNewPais" target="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>Adicionar novo País</h5>
+      </div>
+
+      <div class="modal-body">
+        <app-paises-new></app-paises-new>
+      </div>
+    </div>
+  </div>
 </div>
