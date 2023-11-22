@@ -33,4 +33,17 @@ export class PaisService{
 
         return listPaises;
     }
+
+    public saveNew(newPais:Pais):Observable<Pais>{
+        const token = this.loginService.getToken();
+        const url = `${environment.host}/pais/salvar?token=${token}`;
+
+        return this.http.post(url, newPais).pipe(
+            map(this.mapToPais)
+        )
+    }
+
+    private mapToPais(data:any):Pais{
+        return (Object.assign(new Pais, data));
+    }
 }

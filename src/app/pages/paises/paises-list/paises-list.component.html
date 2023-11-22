@@ -23,7 +23,7 @@
         <td>{{ pais.sigla }}</td>
         <td>{{ pais.gentilico }}</td>
         <td>
-          <a routerLink="pais/salvar/{{ pais }}" class="btn btn-sm btn-warning">
+          <a routerLink="/paises/edit/{{ pais.id }}" class="btn btn-sm btn-warning">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -79,7 +79,7 @@
       </div>
 
       <div class="modal-body">
-        <app-paises-new></app-paises-new>
+        <app-paises-new (newPais)="updateList($event)"></app-paises-new>
       </div>
     </div>
   </div>

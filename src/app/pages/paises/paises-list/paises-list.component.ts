@@ -22,4 +22,8 @@ export class PaisesListComponent implements OnInit {
   public removerPais(paisId : any){
     console.log(paisId);
   }
+
+  updateList($event:Pais){
+    this.listPaises.push($event);
+  }
 }

@@ -37,9 +37,9 @@ export class LoginService {
   }
 
   private removeTokenLocalStorage(): void {
-    localStorage.removeItem("token");
     localStorage.removeItem("login");
     localStorage.removeItem("nome");
     localStorage.removeItem("administrador");
+    localStorage.removeItem("token");
   }
 }

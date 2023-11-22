@@ -1,22 +1,31 @@
 <div class="container">
-    <form>
+    <form [formGroup]="formPais" (ngSubmit)="saveNewPais()">
         <div class="mb-3">
             <label class="form-label">Nome</label>
-            <input type="text" class="form-control" placeholder="Digite o nome do país"/>
+            <input type="text" class="form-control" placeholder="Digite o nome do país" formControlName="nome"/>
+            <div class="forma-text text-danger" *ngIf="isFormControlInvalid('nome')">
+                O nome é obrigatório.
+            </div>
         </div>
 
         <div class="mb-3">
             <label class="form-label">Sigla</label>
-            <input type="text" class="form-control" minlength="2" maxlength="2" placeholder="Digite a sigla do país"/>
+            <input type="text" class="form-control" minlength="2" maxlength="2" placeholder="Digite a sigla do país" formControlName="sigla"/>
+            <div class="forma-text text-danger" *ngIf="isFormControlInvalid('sigla')">
+                A sigla é obrigatória e deve conter 2 caracteres.
+            </div>
         </div>
 
         <div class="mb-3">
             <label class="form-label">Gentílico</label>
-            <input type="text" class="form-control" placeholder="Ex:. Brasileiro, Argentino, Canadense..."/>
+            <input type="text" class="form-control" placeholder="Ex:. Brasileiro, Argentino, Canadense..." formControlName="gentilico"/>
+            <div class="forma-text text-danger" *ngIf="isFormControlInvalid('gentilico')">
+                O gentílico é obrigatório.
+            </div>
         </div>
 
         <div class="d-flex justify-content-end">
-            <button type="submit" class="btn btn-primary">Salvar</button>
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Salvar</button>
         </div>
     </form>
 </div>
