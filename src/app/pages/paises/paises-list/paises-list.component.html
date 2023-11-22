@@ -6,7 +6,7 @@
         <th>Nome</th>
         <th>Sigla</th>
         <th>Gentílico</th>
-        <th>
+        <th *ngIf="isAdmin">
           <button
             class="btn btn-sm btn-success"
             data-bs-toggle="modal"
@@ -22,7 +22,7 @@
         <td>{{ pais.nome }}</td>
         <td>{{ pais.sigla }}</td>
         <td>{{ pais.gentilico }}</td>
-        <td>
+        <td *ngIf="isAdmin">
           <a routerLink="/paises/edit/{{ pais.id }}" class="btn btn-sm btn-warning">
             <svg
               xmlns="http://www.w3.org/2000/svg"

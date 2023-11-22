@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from './login.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private loginService: LoginService,
     private route: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private toastr: ToastrService
   ) {
     this.formLogin = this.criarFormLogin();
   }
@@ -34,12 +36,6 @@ export class LoginComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(5)]],
     });
   }
-  public isFormControlInvalid(controlName: string): boolean {
-    return !!(
-      this.formLogin.get(controlName)?.invalid &&
-      this.formLogin.get(controlName)?.touched
-    );
-  }
   public submitForm() {
     const { username, password } = this.formLogin.value;
     this.formLogin.reset();
@@ -47,7 +43,6 @@ export class LoginComponent implements OnInit {
     this.loginService.login(username, password).subscribe(
       (resp) => {
         this.route.navigate(['']);
-
       },
       (err) => {
         console.error('Erro ao fazer login:', err);

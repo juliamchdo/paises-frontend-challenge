@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PaisService } from '../shared/pais.service';
 import { Pais } from '../shared/pais.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-paises-list',
@@ -10,7 +11,10 @@ import { Pais } from '../shared/pais.model';
 export class PaisesListComponent implements OnInit {
   public listPaises: Array<Pais> = [];
 
-  constructor(private paisService: PaisService) {}
+  public isAdmin: boolean = localStorage.getItem('administrador') === 'true' ? true : false
+  
+
+  constructor(private paisService: PaisService, private toastr:ToastrService) {}
 
   ngOnInit(): void {
 
@@ -20,7 +24,15 @@ export class PaisesListComponent implements OnInit {
   }
 
   public removerPais(paisId : any){
-    console.log(paisId);
+    this.paisService.delete(paisId).subscribe(
+      resp => {
+        this.toastr.success('País excluído com sucesso!');
+        this.listPaises = this.listPaises.filter(p => p.id !== paisId);
+      },
+      err => {
+        this.toastr.error('Erro ao excluir País: ', err)
+      }
+    )
   }
 
   updateList($event:Pais){

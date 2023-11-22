@@ -37,6 +37,12 @@ export class PaisService {
     return this.http.post(url, newPais).pipe(map(this.mapToPais));
   }
 
+  public delete(paisId:number):Observable<any> {
+    const token = this.loginService.getToken();
+    const url = `${environment.host}/pais/excluir?id=${paisId}&token=${token}`;
+    return this.http.get(url, {responseType: 'json'})
+  }
+
   private mapToPaises(data: any): Array<Pais> {
     const listPaises: Pais[] = [];
 
