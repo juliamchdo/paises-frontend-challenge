@@ -30,6 +30,13 @@ export class PaisService {
       .pipe(map((paises) => paises.filter((pais) => pais.id === id)));
   }
 
+  public searchPaises(filtro:string):Observable<any>  {
+    const token = localStorage.getItem('token');
+    const url = `${environment.host}/pais/pesquisar?filtro=${filtro}&token=${token}`;
+
+    return this.http.get(url).pipe(map(this.mapToPaises));
+  }
+
   public saveNew(newPais: Pais): Observable<Pais> {
     const token = this.loginService.getToken();
     const url = `${environment.host}/pais/salvar?token=${token}`;

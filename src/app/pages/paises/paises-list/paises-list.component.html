@@ -1,4 +1,28 @@
-<h2>Lista de Países</h2>
+<div
+  [formGroup]="searchPaisForm"
+  class="d-flex justify-content-between align-items-center mb-4"
+>
+  <h2>Lista de Países</h2>
+  <div class="input-group w-50">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Pesquise pelo nome, sigla ou gentílico"
+      aria-label="Pesquise pelo nome, sigla ou gentílico"
+      aria-describedby="basic-addon2"
+      formControlName="filtro"
+    />
+    <div class="input-group-append">
+      <button
+        class="btn btn-outline-secondary"
+        (click)="searchPais()"
+        type="button"
+      >
+        Pesquisar
+      </button>
+    </div>
+  </div>
+</div>
 <div class="table-responsive">
   <table class="table">
     <thead>
@@ -23,7 +47,10 @@
         <td>{{ pais.sigla }}</td>
         <td>{{ pais.gentilico }}</td>
         <td *ngIf="isAdmin">
-          <a routerLink="/paises/edit/{{ pais.id }}" class="btn btn-sm btn-warning">
+          <a
+            routerLink="/paises/edit/{{ pais.id }}"
+            class="btn btn-sm btn-warning"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -69,6 +96,7 @@
       </tr>
     </tbody>
   </table>
+  <div class="text-center w-100 p-4" *ngIf="!listPaises.length">Nenhum país encontrado</div>
 </div>
 
 <div class="modal fade" id="addNewPais" target="-1">

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PaisService } from '../shared/pais.service';
 import { Pais } from '../shared/pais.model';
 import { ToastrService } from 'ngx-toastr';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-paises-list',
@@ -10,11 +11,14 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class PaisesListComponent implements OnInit {
   public listPaises: Array<Pais> = [];
+  public searchPaisForm: FormGroup;
 
   public isAdmin: boolean = localStorage.getItem('administrador') === 'true' ? true : false
   
 
-  constructor(private paisService: PaisService, private toastr:ToastrService) {}
+  constructor(private paisService: PaisService, private toastr:ToastrService, private fb: FormBuilder) {
+    this.searchPaisForm = this.searchForm();
+  }
 
   ngOnInit(): void {
 
@@ -33,6 +37,26 @@ export class PaisesListComponent implements OnInit {
         this.toastr.error('Erro ao excluir País: ', err)
       }
     )
+  }
+
+  public searchForm():FormGroup{
+    return this.fb.group({
+      filtro: [null, [Validators.required]],
+    });
+  }
+
+  public searchPais(){
+    const filtro = this.searchPaisForm.value;
+
+    this.paisService.searchPaises(filtro.filtro).subscribe(
+      resp => {
+        this.listPaises = resp
+      },
+      error => {
+
+      }
+    )
+    
   }
 
   updateList($event:Pais){
