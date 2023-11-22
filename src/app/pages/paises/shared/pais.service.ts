@@ -1,49 +1,51 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
-import { environment } from "src/environments/environment";
-import { Pais } from "../shared/pais.model";
-import { LoginService } from "src/app/security/login/login.service";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+import { Pais } from '../shared/pais.model';
+import { LoginService } from 'src/app/security/login/login.service';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
+export class PaisService {
+  constructor(private http: HttpClient, private loginService: LoginService) {}
 
-export class PaisService{
-    constructor(private http:HttpClient, private loginService:LoginService){
+  public listAll(): Observable<Pais[]> {
+    const token = this.loginService.getToken();
 
-    }
+    const url = `${environment.host}/pais/listar?token=${token}`;
 
-    public listAll():Observable<Pais[]>{
+    return this.http.get(url).pipe(map(this.mapToPaises));
+  }
 
-        const token = this.loginService.getToken();
-    
-        const url = `${environment.host}/pais/listar?token=${token}`
+  public listById(id: number): Observable<Pais[]> {
+    const token = this.loginService.getToken();
 
-        return this.http.get(url).pipe(
-            map(this.mapToPaises)
-        )
-    }
+    const url = `${environment.host}/pais/listar?token=${token}`;
 
-    private mapToPaises(data:any):Array<Pais>{
-        const listPaises : Pais[] = [];
+    return this.http
+      .get<Pais[]>(url)
+      .pipe(map((paises) => paises.filter((pais) => pais.id === id)));
+  }
 
-        data.forEach((e:any) => listPaises.push(Object.assign(new Pais, e)));
+  public saveNew(newPais: Pais): Observable<Pais> {
+    const token = this.loginService.getToken();
+    const url = `${environment.host}/pais/salvar?token=${token}`;
 
-        return listPaises;
-    }
+    return this.http.post(url, newPais).pipe(map(this.mapToPais));
+  }
 
-    public saveNew(newPais:Pais):Observable<Pais>{
-        const token = this.loginService.getToken();
-        const url = `${environment.host}/pais/salvar?token=${token}`;
+  private mapToPaises(data: any): Array<Pais> {
+    const listPaises: Pais[] = [];
 
-        return this.http.post(url, newPais).pipe(
-            map(this.mapToPais)
-        )
-    }
+    data.forEach((e: any) => listPaises.push(Object.assign(new Pais(), e)));
 
-    private mapToPais(data:any):Pais{
-        return (Object.assign(new Pais, data));
-    }
+    return listPaises;
+  }
+
+  private mapToPais(data: any): Pais {
+    return Object.assign(new Pais(), data);
+  }
 }

@@ -1,35 +1,45 @@
 <div class="container">
-    <div class="d-flex justify-content-between">
-        <h3>Atualizar Países</h3>
-        
+  <div class="d-flex justify-content-between">
+    <h3>Atualizar Países</h3>
 
-        <button class="btn btn-sm btn-secondary px-4 py-2" routerLink="/paises">
-            Voltar
-        </button>
+    <button class="btn btn-sm btn-secondary px-4 py-2" routerLink="/paises">
+      Voltar
+    </button>
+  </div>
+
+  <form [formGroup]="formPais" (ngSubmit)="updatePais()">
+    <div class="mb-3">
+      <label class="form-label">Nome</label>
+      <input type="text" class="form-control" formControlName="nome" />
+      <div class="form-text text-danger" *ngIf="isFormControlInvalid('nome')">
+        O nome é obrigatório.
+      </div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Sigla</label>
+      <input
+        type="text"
+        class="form-control"
+        minlength="2"
+        maxlength="2"
+        formControlName="sigla"
+      />
+      <div class="form-text text-danger" *ngIf="isFormControlInvalid('sigla')">
+        A sigla é obrigatória.
+      </div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Gentílico</label>
+      <input type="text" class="form-control" formControlName="gentilico" />
+      <div class="form-text text-danger" *ngIf="isFormControlInvalid('gentilico')">
+        O gentílico é obrigatório.
+      </div>
     </div>
 
-    <form>
-        <div class="mb-3">
-            <label class="form-label">ID</label>
-            <input type="text" class="form-control" disabled />
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Nome</label>
-            <input type="text" class="form-control" />
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Sigla</label>
-            <input type="text" class="form-control" />
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Gentílico</label>
-            <input type="text" class="form-control" />
-        </div>
-
-        <div class="d-flex justify-content-end">
-            <button type="submit" class="btn btn-sm btn-primary px-4 py-2">
-                Salvar
-            </button>
-        </div>
-    </form>
+    <div class="d-flex justify-content-end">
+      <button type="submit" class="btn btn-sm btn-primary px-4 py-2" [disabled]="!formPais.valid">
+        Salvar
+      </button>
+    </div>
+  </form>
 </div>
