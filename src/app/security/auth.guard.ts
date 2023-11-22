@@ -30,12 +30,12 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree> {
     const token = this.loginService.getToken();
 
-    if(token === 'null') {
-      this.toastr.error('Usuário ou Senha inválidos.');
+    if (token === 'null' || token === null) {
       this.route.navigate(['login']);
+      this.toastr.error('Usuário ou Senha inválidos.');
       return false;
     } else {
-        return true;
+      return true;
     }
   }
 }
